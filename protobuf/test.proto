@@ -1,0 +1,12 @@
+syntax="proto3";
+
+import "model.proto";
+import "google/protobuf/empty.proto";
+package v1;
+
+option go_package="github.com/fajrirahmat/interview-aji/internal/server;server";
+
+service CheckInOutService{
+    rpc GetLocation(google.protobuf.Empty) returns (ListLocation){}
+    rpc CheckInOut(CheckInOutRequest) returns (CheckInOutResponse){}
+}

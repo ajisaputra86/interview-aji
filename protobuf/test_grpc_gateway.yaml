@@ -1,0 +1,10 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+    - selector: v1.CheckInOutService.GetLocation
+      get: /v1/location
+    - selector: v1.CheckInOutService.CheckInOut
+      post: /v1/checkinout
+      body: "*"
