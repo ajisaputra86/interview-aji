@@ -62,6 +62,7 @@ func (s *server) Run() error {
 	return m.Serve()
 }
 
+//API get location
 func (s *server) GetLocation(ctx context.Context, _ *emptypb.Empty) (*model.ListLocation, error) {
 	locs, _ := s.repo.ListLocation(ctx)
 	return &model.ListLocation{
@@ -69,6 +70,7 @@ func (s *server) GetLocation(ctx context.Context, _ *emptypb.Empty) (*model.List
 	}, nil
 }
 
+//API check IN/OUT
 func (s *server) CheckInOut(ctx context.Context, request *model.CheckInOutRequest) (*model.CheckInOutResponse, error) {
 	return nil, errors.New("Not implemented yet")
 }
