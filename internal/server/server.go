@@ -9,8 +9,7 @@ import (
 	"net/http"
 
 	"github.com/fajrirahmat/interview-aji/model"
-	"github.com/fajrirahmat/interview-aji/repository"
-	"github.com/fajrirahmat/interview-aji/repository/sqlite"
+	repository "github.com/fajrirahmat/interview-aji/repository"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/soheilhy/cmux"
 	"google.golang.org/grpc"
@@ -31,7 +30,7 @@ type server struct {
 func New() (Runner, error) {
 	s := &server{}
 
-	repo, err := sqlite.NewSQLLiteConnection("db/test.db")
+	repo, err := repository.NewSQLLiteConnection("db/test.db")
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
@@ -72,6 +71,12 @@ func (s *server) GetLocation(ctx context.Context, _ *emptypb.Empty) (*model.List
 
 //API check IN/OUT
 func (s *server) CheckInOut(ctx context.Context, request *model.CheckInOutRequest) (*model.CheckInOutResponse, error) {
+	checkin, _ := s.repo.InputCheckin(ctx)
+	return &model.CheckInOutResponse{
+		Id:        checkin.Identifier,
+		CheckType: checkin.CheckType,
+		Location:  checkin.Location,
+	}
 	return nil, errors.New("Not implemented yet")
 }
 

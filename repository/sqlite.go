@@ -1,4 +1,4 @@
-package sqlite
+package repository
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	"log"
 
 	"github.com/fajrirahmat/interview-aji/model"
-	"github.com/fajrirahmat/interview-aji/repository"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pressly/goose"
 )
@@ -16,7 +15,7 @@ type sqlite struct {
 	db *sql.DB
 }
 
-func NewSQLLiteConnection(dbpath string) (repository.DB, error) {
+func NewSQLLiteConnection(dbpath string) (DB, error) {
 	connURL := fmt.Sprintf("file:%s?cache=shared", dbpath)
 	db, err := sql.Open("sqlite3", connURL)
 	if err != nil {
@@ -25,7 +24,7 @@ func NewSQLLiteConnection(dbpath string) (repository.DB, error) {
 	log.Println("PING: ", db.Ping())
 	db.SetMaxOpenConns(5)
 
-	log.Printf("Migrate DB: %v", goose.Up(db, "repository/sqlite/migration"))
+	log.Printf("Migrate DB: %v", goose.Up(db, "repository"))
 
 	return &sqlite{
 		db: db,
