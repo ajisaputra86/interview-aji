@@ -49,3 +49,15 @@ func (s *sqlite) ListLocation(ctx context.Context) ([]*model.Location, error) {
 	}
 	return list, nil
 }
+
+func (s *sqlite) AddCheckin(ctx context.Context, request *model.CheckInOutRequest) ([]*model.CheckInOutRequest, error) {
+	var data []*model.CheckInOutRequest
+	_, err := s.db.Exec("INSERT INTO checkin (identifier, type, location_id) VALUES ($1, $2, $3)",
+		request.Identifier, request.Type, request.LocationId)
+
+	if err != nil {
+		return data, err
+	}
+
+	return data, nil
+}

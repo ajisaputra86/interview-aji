@@ -71,13 +71,13 @@ func (s *server) GetLocation(ctx context.Context, _ *emptypb.Empty) (*model.List
 
 //API check IN/OUT
 func (s *server) CheckInOut(ctx context.Context, request *model.CheckInOutRequest) (*model.CheckInOutResponse, error) {
-	checkin, _ := s.repo.InputCheckin(ctx)
-	return &model.CheckInOutResponse{
-		Id:        checkin.Identifier,
-		CheckType: checkin.CheckType,
-		Location:  checkin.Location,
+	var data *model.CheckInOutResponse
+	_, err := s.repo.AddCheckin(ctx, request)
+	if err != nil {
+		return data, err
+	} else {
+		return data, errors.New("success input data !")
 	}
-	return nil, errors.New("Not implemented yet")
 }
 
 func (s *server) Close() error {

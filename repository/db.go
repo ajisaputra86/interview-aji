@@ -10,5 +10,5 @@ import (
 type DB interface {
 	io.Closer
 	ListLocation(ctx context.Context) ([]*model.Location, error)
-	InputCheckin(ctx context.Context) ([]*model.CheckInOutRequest, error)
+	AddCheckin(ctx context.Context, request *model.CheckInOutRequest) ([]*model.CheckInOutRequest, error)
 }
